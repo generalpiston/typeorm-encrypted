@@ -1,7 +1,7 @@
 
-import { EncryptedColumnOptions } from "../decorators/options/EncryptedColumnOptions";
+import { IEncryptedColumnOptions } from "../decorators/options/IEncryptedColumnOptions";
 
-export interface EncryptedColumnMetadata {
+export interface IEncryptedColumnMetadata {
   /**
    * Class to which column is applied.
    */
@@ -15,5 +15,5 @@ export interface EncryptedColumnMetadata {
   /**
    * Extra column options.
    */
-  readonly options: EncryptedColumnOptions;
+  readonly options: IEncryptedColumnOptions;
 }

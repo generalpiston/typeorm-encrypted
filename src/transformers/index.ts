@@ -1,9 +1,11 @@
 
 import { ObjectLiteral } from "typeorm";
 
-import { createCipheriv, createDecipheriv, randomBytes } from "crypto";
+// import { createCipheriv, createDecipheriv, randomBytes } from "crypto";
+import { createCipheriv, createDecipheriv } from "crypto";
 
 import  { getMetadataStorage } from "../metadata";
+import { IEncryptedColumnOptions } from "../decorators/options";
 
 /**
  * Encrypt fields on entity.
@@ -13,18 +15,23 @@ export function encrypt<T extends ObjectLiteral>(entity: T): T {
     if (entity.constructor === columnMetadata.target) {
       for (let prop in entity) {
         if (prop === columnMetadata.propertyName) {
-          let contents = entity[prop];
-          let iv: Buffer = randomBytes(columnMetadata.options.ivLength);
-          let cipher = createCipheriv(columnMetadata.options.algorithm, Buffer.from(columnMetadata.options.key, "hex"), iv);
-          let encryptedStart = cipher.update(contents, "utf8");
-          let encryptedFinal = cipher.final();
-          let encrypted = Buffer.concat([ iv, encryptedStart, encryptedFinal ]);
-          entity[prop] = encrypted.toString("base64");
+          entity[prop] = encryptData(Buffer.from(entity[prop], "utf8"), columnMetadata.options).toString("base64");
         }
       }
     }
   }
   return entity;
+}
+
+/**
+ * Encrypt data.
+ */
+export function encryptData(data: Buffer, options: IEncryptedColumnOptions): Buffer {
+  let iv = data.slice(0, options.ivLength);
+  let cipher = createCipheriv(options.algorithm, Buffer.from(options.key, "hex"), iv);
+  let start = cipher.update(data.slice(options.ivLength));
+  let final = cipher.final();
+  return Buffer.concat([ start, final ]);
 }
 
 /**
@@ -35,17 +42,21 @@ export function decrypt<T extends ObjectLiteral>(entity: T): T {
     if (entity.constructor === columnMetadata.target) {
       for (let prop in entity) {
         if (prop === columnMetadata.propertyName) {
-          let contents = entity[prop];
-          let buffer = Buffer.from(contents, "base64");
-          let iv = buffer.slice(0, columnMetadata.options.ivLength);
-          let decipher = createDecipheriv(columnMetadata.options.algorithm, Buffer.from(columnMetadata.options.key, "hex"), iv);
-          let decryptedStart = decipher.update(buffer.slice(columnMetadata.options.ivLength), null, "utf8");
-          let decryptedFinal = decipher.final("utf8");
-          let decrypted = decryptedStart + decryptedFinal;
-          entity[prop] = decrypted;
+          entity[prop] = decryptData(Buffer.from(entity[prop], "base64"), columnMetadata.options).toString("utf8");
         }
       }
     }
   }
   return entity;
+}
+
+/**
+ * Decrypt data.
+ */
+export function decryptData(data: Buffer, options: IEncryptedColumnOptions): Buffer {
+  let iv = data.slice(0, options.ivLength);
+  let decipher = createDecipheriv(options.algorithm, Buffer.from(options.key, "hex"), iv);
+  let start = decipher.update(data.slice(options.ivLength));
+  let final = decipher.final();
+  return Buffer.concat([ start, final ]);
 }

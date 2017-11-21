@@ -1,8 +1,8 @@
 
-import { EncryptedColumnOptions } from "./options/EncryptedColumnOptions";
+import { IEncryptedColumnOptions } from "./options/IEncryptedColumnOptions";
 import { getMetadataStorage } from "../metadata";
 
-export function EncryptedColumn(options: EncryptedColumnOptions): Function {
+export function EncryptedColumn(options: IEncryptedColumnOptions): Function {
   return function (object: Object, propertyName: string) {
     getMetadataStorage().encryptedColumns.push({
       target: object.constructor,

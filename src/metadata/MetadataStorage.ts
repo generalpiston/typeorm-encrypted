@@ -1,6 +1,6 @@
 
-import { EncryptedColumnMetadata } from "./EncryptedColumnMetadata";
+import { IEncryptedColumnMetadata } from "./IEncryptedColumnMetadata";
 
 export class MetadataStorage {
-  encryptedColumns: EncryptedColumnMetadata[] = [];
+  encryptedColumns: IEncryptedColumnMetadata[] = [];
 }

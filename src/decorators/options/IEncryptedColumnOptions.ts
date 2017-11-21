@@ -1,5 +1,5 @@
 
-export interface EncryptedColumnOptions {
+export interface IEncryptedColumnOptions {
   key: string;
   algorithm: string;
   ivLength: number;

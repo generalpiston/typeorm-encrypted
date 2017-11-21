@@ -1,6 +1,9 @@
 
 import { MetadataStorage } from "./MetadataStorage";
 
+export * from "./IEncryptedColumnMetadata";
+export { MetadataStorage };
+
 export function getGlobalVariable(): any {
   return global;
 }
