@@ -5,17 +5,23 @@
   "main": "build/compiled/index.js",
   "types": "build/compiled/index.d.ts",
   "devDependencies": {
+    "@types/chai": "^4.0.5",
+    "@types/mocha": "^2.2.44",
     "@types/node": "^8.0.53",
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
     "typescript": "^2.6.1"
   },
   "peerDependencies": {
-    "typeorm": "^0.1.2"
+    "typeorm": "^0.1.6"
   },
   "scripts": {
     "preinstall": "npm run build",
     "clean": "rm -rf build",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "mocha --reporter spec --require ts-node/register 'test/**/*.test.ts'"
   },
   "repository": {
     "type": "git",
@@ -33,5 +39,8 @@
   "bugs": {
     "url": "https://github.com/abec/typeorm-encrypted/issues"
   },
-  "homepage": "https://github.com/abec/typeorm-encrypted#readme"
+  "homepage": "https://github.com/abec/typeorm-encrypted#readme",
+  "dependencies": {
+    "typeorm": "^0.1.6"
+  }
 }

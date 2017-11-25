@@ -1,8 +1,7 @@
 
 import { ObjectLiteral } from "typeorm";
 
-// import { createCipheriv, createDecipheriv, randomBytes } from "crypto";
-import { createCipheriv, createDecipheriv } from "crypto";
+import { createCipheriv, createDecipheriv, randomBytes } from "crypto";
 
 import  { getMetadataStorage } from "../metadata";
 import { IEncryptedColumnOptions } from "../decorators/options";
@@ -27,11 +26,11 @@ export function encrypt<T extends ObjectLiteral>(entity: T): T {
  * Encrypt data.
  */
 export function encryptData(data: Buffer, options: IEncryptedColumnOptions): Buffer {
-  let iv = data.slice(0, options.ivLength);
+  let iv = options.iv ? Buffer.from(options.iv, "hex") : randomBytes(options.ivLength);
   let cipher = createCipheriv(options.algorithm, Buffer.from(options.key, "hex"), iv);
-  let start = cipher.update(data.slice(options.ivLength));
+  let start = cipher.update(data);
   let final = cipher.final();
-  return Buffer.concat([ start, final ]);
+  return Buffer.concat([ iv, start, final ]);
 }
 
 /**

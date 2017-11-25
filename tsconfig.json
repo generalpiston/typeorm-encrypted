@@ -19,6 +19,9 @@
         "strictNullChecks": true,
         "noUnusedLocals": true
     },
+    "include": [
+        "src"
+    ],
     "exclude": [
         "tmp",
         "temp",
