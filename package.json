@@ -19,7 +19,7 @@
     "typeorm": "^0.1.6"
   },
   "scripts": {
-    "preinstall": "npm run build",
+    "prepackage": "npm run build",
     "clean": "rm -rf build",
     "build": "tsc",
     "test": "mocha --reporter spec --require ts-node/register 'test/**/*.test.ts'"
