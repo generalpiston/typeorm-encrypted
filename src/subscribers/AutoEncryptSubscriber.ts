@@ -21,6 +21,6 @@ export class AutoEncryptSubscriber implements EntitySubscriberInterface {
    * Decrypt after find.
    */
   afterLoad(entity: any): void {
-    decrypt(this);
+    decrypt(entity);
   }
 }

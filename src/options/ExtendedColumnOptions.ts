@@ -1,4 +1,3 @@
-
 import { ColumnOptions } from "typeorm";
 import { EncryptionOptions } from "./EncryptionOptions";
 

@@ -43,8 +43,7 @@ class User extends BaseEntity {
     encrypt: {
       key: "d85117047fd06d3afa79b6e44ee3a52eb426fc24c3a2e3667732e8da0342b4da",
       algorithm: "aes-256-cbc",
-      ivLength: 16,
-      iv: "ff5ac19190424b1d88f9419ef949ae56"
+      ivLength: 16
     }
   })
   secret: string;
@@ -59,3 +58,5 @@ let connection = createConnection({
 });
 
 ```
+
+Entities and subscribers can be configured via `ormconfig.json` and environment variables as well. See the [typeorm docs](http://typeorm.io/#/using-ormconfig) for more details.

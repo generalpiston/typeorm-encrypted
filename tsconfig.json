@@ -3,7 +3,7 @@
     "compilerOptions": {
         "lib": ["es5", "es6", "esnext.asynciterable"],
         "baseUrl": "src",
-        "outDir": "build/compiled",
+        "outDir": "lib",
         "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
@@ -11,13 +11,13 @@
         "experimentalDecorators": true,
         "sourceMap": true,
         "noImplicitAny": true,
-        "declaration": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
         "stripInternal": true,
         "pretty": true,
         "strictNullChecks": true,
-        "noUnusedLocals": true
+        "noUnusedLocals": true,
+        "declaration": true
     },
     "include": [
         "src"

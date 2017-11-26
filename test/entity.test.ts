@@ -38,14 +38,16 @@ describe("Entities", () => {
     expect(result.secret).to.equal("test");
   });
 
-  it ("should automatically encrypt", async () => {
-    let result = new Test();
-    result.secret = "test";
-
+  it ("should automatically encrypt and decrypt", async () => {
     await withConnection([ Test ], [], [ AutoEncryptSubscriber ], async () => {
+      let result = new Test();
+      result.secret = "test";
       await result.save();
-    });
+      expect(result.secret).to.equal("/1rBkZBCSx2I+UGe+UmuVhKzmHsDDv0EvRtMBFiaE3A=");
 
-    expect(result.secret).to.equal("/1rBkZBCSx2I+UGe+UmuVhKzmHsDDv0EvRtMBFiaE3A=");
+      let results = await Test.find();
+      expect(results.length).to.equal(1);
+      expect(results[0].secret).to.equal("test");
+    });
   })
 });
