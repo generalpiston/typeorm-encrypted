@@ -22,7 +22,7 @@ Encrypted field for [typeorm](http://typeorm.io).
 ## Installation
 
 ```
-npm install --save abec/typeorm-encrypted
+npm install --save typeorm-encrypted
 ```
 
 ## Example
@@ -53,6 +53,7 @@ class User extends BaseEntity {
 
 let connection = createConnection({
   ...
+  entities: [ User, ... ],
   subscribers: [ AutoEncryptSubscriber, ... ]
   ...
 });
