@@ -1,2 +1,3 @@
 
-export * from "./IEncryptionOptions";
+export * from "./ExtendedColumnOptions";
+export * from "./EncryptionOptions";

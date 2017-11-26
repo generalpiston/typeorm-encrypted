@@ -4,7 +4,7 @@ Encrypted field for typeorm.
 ## Installation
 
 ```
-npm install --save typeorm-encrypted
+npm install --save abec/typeorm-encrypted
 ```
 
 ## Example
@@ -12,19 +12,32 @@ npm install --save typeorm-encrypted
 The following example has the field automatically encrypted/decrypted on save/fetch respectively.
 
 ```
+import { BaseEntity, Entity, Column, createConnection } from "typeorm";
+import { ExtendedColumnOptions, AutoEncryptSubscriber } from "typeorm-encrypted";
+
 @Entity()
-export class User extends EncryptedBaseEntity {
+class User extends BaseEntity {
   ...
-  @EncryptedColumn({
-    key: "d85117047fd06d3afa79b6e44ee3a52eb426fc24c3a2e3667732e8da0342b4da",
-    algorithm: "aes-256-cbc",
-    ivLength: 16
-  })
-  @Column({
+
+  @Column(<ExtendedColumnOptions>{
     type: "varchar",
-    nullable: false
+    nullable: false,
+    encrypt: {
+      key: "d85117047fd06d3afa79b6e44ee3a52eb426fc24c3a2e3667732e8da0342b4da",
+      algorithm: "aes-256-cbc",
+      ivLength: 16,
+      iv: "ff5ac19190424b1d88f9419ef949ae56"
+    }
   })
   secret: string;
+
   ...
 }
+
+let connection = createConnection({
+  ...
+  subscribers: [ AutoEncryptSubscriber, ... ]
+  ...
+});
+
 ```

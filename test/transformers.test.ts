@@ -1,12 +1,5 @@
 import { expect } from "chai";
-import {
-  encryptData,
-  decryptData
-  // encrypt,
-  // encryptData,
-  // decrypt,
-  // decryptData
-} from "../src/transformers";
+import { encryptData, decryptData } from "../src/transformers";
 
 describe("Transformers", () => {
   it ("should encrypt", () => {
