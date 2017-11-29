@@ -1,7 +1,9 @@
 import { expect } from "chai";
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import { encrypt, decrypt } from "../src/transformers";
-import { ExtendedColumnOptions } from "../src/options";
+// import { EncryptionOptions } from "../src/options";
+// import { ExtendedColumnOptions } from "../src/options";
+// import { ColumnOptions } from "../src/options/ColumnOptions";
 import { AutoEncryptSubscriber } from "../src/subscribers";
 import { withConnection } from "./utils";
 
@@ -10,7 +12,7 @@ class Test extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column(<ExtendedColumnOptions>{
+  @Column({
     type: "varchar",
     nullable: false,
     encrypt: {
