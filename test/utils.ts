@@ -1,16 +1,20 @@
-import { createConnection } from "typeorm";
+import { createConnection, Connection } from "typeorm";
+import { AutoEncryptSubscriber } from "../src/subscribers";
 
-export async function withConnection (entities: any[], listeners: any[], subscribers: any[], callback: Function): Promise<any> {
-  let connection = await createConnection({
-    "type": "sqlite",
-    "database": `/tmp/test.${process.pid}.sqlite`,
-    "synchronize": true,
-    "logging": false,
-    "entities": entities,
-    "subscribers": subscribers
-  });
-  let result = await Promise.resolve(callback(connection));
-  connection.close();
+let CONNECTION: Connection;
 
-  return result;
+export async function withConnection (callback: Function): Promise<any> {
+  if (!CONNECTION) {
+    CONNECTION = await createConnection({
+      "type": "sqlite",
+      "database": `/tmp/test.${process.pid}.sqlite`,
+      "synchronize": true,
+      "logging": false,
+      "entities": [
+        "**/entities/**/*.ts"
+      ],
+      "subscribers": [ AutoEncryptSubscriber ]
+    });
+  }
+  return await Promise.resolve(callback(CONNECTION));
 }

@@ -3,4 +3,5 @@ export interface EncryptionOptions {
   algorithm: string;
   ivLength: number;
   iv?: string;    //// For testing mainly.
+  looseMatching?: boolean;
 }

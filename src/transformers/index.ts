@@ -8,10 +8,11 @@ import { ExtendedColumnOptions, EncryptionOptions } from "../options";
 export function encrypt<T extends ObjectLiteral>(entity: T): T {
   for (let columnMetadata of getMetadataArgsStorage().columns) {
     let { propertyName, mode, target } = columnMetadata;
-    if (entity.constructor === target && mode == "regular") {
-      let options: ExtendedColumnOptions = columnMetadata.options;
-      if (options.encrypt) {
-        entity[propertyName] = encryptData(Buffer.from(entity[propertyName], "utf8"), options.encrypt).toString("base64");
+    let options: ExtendedColumnOptions = columnMetadata.options;
+    let encrypt = options.encrypt;
+    if (encrypt && mode === "regular" && (encrypt.looseMatching || entity.constructor === target)) {
+      if (entity[propertyName]) {
+        entity[propertyName] = encryptData(Buffer.from(entity[propertyName], "utf8"), encrypt).toString("base64");
       }
     }
   }
@@ -35,10 +36,11 @@ export function encryptData(data: Buffer, options: EncryptionOptions): Buffer {
 export function decrypt<T extends ObjectLiteral>(entity: T): T {
   for (let columnMetadata of getMetadataArgsStorage().columns) {
     let { propertyName, mode, target } = columnMetadata;
-    if (entity.constructor === target && mode == "regular") {
-      let options: ExtendedColumnOptions = columnMetadata.options;
-      if (options.encrypt) {
-        entity[propertyName] = decryptData(Buffer.from(entity[propertyName], "base64"), options.encrypt).toString("utf8");
+    let options: ExtendedColumnOptions = columnMetadata.options;
+    let encrypt = options.encrypt;
+    if (encrypt && mode === "regular" && (encrypt.looseMatching || entity.constructor === target)) {
+      if (entity[propertyName]) {
+        entity[propertyName] = decryptData(Buffer.from(entity[propertyName], "base64"), encrypt).toString("utf8");
       }
     }
   }
