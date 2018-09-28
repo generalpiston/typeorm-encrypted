@@ -1,6 +1,6 @@
 {
   "name": "typeorm-encrypted",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "encrypted typeorm fields",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -22,19 +22,14 @@
     "prepare": "npm install --no-save typeorm@^0.1.6 && npm run build",
     "clean": "rm -rf lib",
     "build": "tsc",
-    "test": "mocha --reporter spec --require ts-node/register 'test/**/*.test.ts'"
+    "test":
+      "mocha --reporter spec --require ts-node/register 'test/**/*.test.ts'"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/abec/typeorm-encrypted.git"
   },
-  "keywords": [
-    "typescript",
-    "typeorm",
-    "encrypted",
-    "encryption",
-    "encrypt"
-  ],
+  "keywords": ["typescript", "typeorm", "encrypted", "encryption", "encrypt"],
   "author": {
     "name": "Abraham Elmahrek",
     "email": "abraham@elmahrek.com"
