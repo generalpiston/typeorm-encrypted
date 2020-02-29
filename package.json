@@ -1,6 +1,6 @@
 {
   "name": "typeorm-encrypted",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "encrypted typeorm fields",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -45,7 +45,5 @@
     "url": "https://github.com/abec/typeorm-encrypted/issues"
   },
   "homepage": "https://github.com/abec/typeorm-encrypted#readme",
-  "dependencies": {
-    "tsc": "^1.20150623.0"
-  }
+  "dependencies": {}
 }
