@@ -7,26 +7,27 @@
   "devDependencies": {
     "@types/chai": "^4.0.5",
     "@types/mocha": "^2.2.44",
-    "@types/node": "^8.0.53",
+    "@types/node": "^9.6.0",
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
-    "sqlite3": "^3.1.13",
+    "sqlite3": "^4.1.1",
     "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
-    "typescript": "^2.6.1"
+    "typeorm": "^0.2.24",
+    "typescript": "^3.3.3333"
   },
   "peerDependencies": {
-    "typeorm": "^0.1.6"
+    "typeorm": "^0.2.24"
   },
   "scripts": {
-    "prepare": "npm install --no-save typeorm@^0.1.6 && npm run build",
+    "prepare": "npm run build",
     "clean": "rm -rf lib",
     "build": "tsc",
     "test": "mocha --reporter spec --require ts-node/register 'test/**/*.test.ts'"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abec/typeorm-encrypted.git"
+    "url": "https://github.com/abec/typeorm-encrypted.git"
   },
   "keywords": [
     "typescript",
@@ -43,5 +44,8 @@
   "bugs": {
     "url": "https://github.com/abec/typeorm-encrypted/issues"
   },
-  "homepage": "https://github.com/abec/typeorm-encrypted#readme"
+  "homepage": "https://github.com/abec/typeorm-encrypted#readme",
+  "dependencies": {
+    "tsc": "^1.20150623.0"
+  }
 }

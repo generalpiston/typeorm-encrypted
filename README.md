@@ -1,4 +1,3 @@
-
 # typeorm-encrypted
 
 Encrypted field for [typeorm](http://typeorm.io).
@@ -26,6 +25,41 @@ npm install --save typeorm-encrypted
 ```
 
 ## Example
+
+This library can invoked in 2 ways: transformers or subscribers. In both of the examples below, the `Key` and `IV` vary based on the algorithm. See the [node docs](https://nodejs.org/api/crypto.html#crypto_crypto_createcipheriv_algorithm_key_iv_options) for more info.
+
+### Transformers (Recommended)
+
+The following example has the field automatically encrypted/decrypted on save/fetch respectively.
+
+```
+import { Entity, Column } from "typeorm";
+import { EncryptionTransformer } from "typeorm-encrypted";
+
+@Entity()
+class User {
+  ...
+
+  @Column({
+    type: "varchar",
+    nullable: false,
+    transformer: new EncryptionTransformer({
+      key: 'e41c966f21f9e1577802463f8924e6a3fe3e9751f201304213b2f845d8841d61',
+      algorithm: 'aes-256-cbc',
+      ivLength: 16,
+      iv: 'ff5ac19190424b1d88f9419ef949ae56'
+    })
+  })
+  secret: string;
+
+  ...
+}
+
+```
+
+More information about transformers is available in the [typeorm docs](https://typeorm.io/#/entities/column-options).
+
+### Subscribers
 
 The following example has the field automatically encrypted/decrypted on save/fetch respectively.
 

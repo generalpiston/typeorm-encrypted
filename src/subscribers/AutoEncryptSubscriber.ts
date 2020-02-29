@@ -1,5 +1,10 @@
-import { EventSubscriber, EntitySubscriberInterface, InsertEvent, UpdateEvent } from "typeorm";
-import { encrypt, decrypt } from "../transformers";
+import {
+  EventSubscriber,
+  EntitySubscriberInterface,
+  InsertEvent,
+  UpdateEvent
+} from 'typeorm';
+import { encrypt, decrypt } from '../entity';
 
 @EventSubscriber()
 export class AutoEncryptSubscriber implements EntitySubscriberInterface {
