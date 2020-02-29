@@ -6,6 +6,10 @@ import { ExtendedColumnOptions, EncryptionOptions } from "../options";
  * Encrypt fields on entity.
  */
 export function encrypt<T extends ObjectLiteral>(entity: T): T {
+  if (!entity) {
+    return entity;
+  }
+
   for (let columnMetadata of getMetadataArgsStorage().columns) {
     let { propertyName, mode, target } = columnMetadata;
     let options: ExtendedColumnOptions = columnMetadata.options;
@@ -34,6 +38,10 @@ export function encryptData(data: Buffer, options: EncryptionOptions): Buffer {
  * Decrypt fields on entity.
  */
 export function decrypt<T extends ObjectLiteral>(entity: T): T {
+  if (!entity) {
+    return entity;
+  }
+
   for (let columnMetadata of getMetadataArgsStorage().columns) {
     let { propertyName, mode, target } = columnMetadata;
     let options: ExtendedColumnOptions = columnMetadata.options;
