@@ -5,8 +5,8 @@ Encrypted field for [typeorm](http://typeorm.io).
 <div align="center">
   <br />
   <br />
-  <a href="https://circleci.com/gh/abec/typeorm-encrypted/tree/master">
-    <img src="https://circleci.com/gh/abec/typeorm-encrypted/tree/master.svg?style=shield&circle-token=:circle-token">
+  <a href="https://circleci.com/gh/generalpiston/typeorm-encrypted/tree/master">
+    <img src="https://circleci.com/gh/generalpiston/typeorm-encrypted/tree/master.svg?style=shield&circle-token=:circle-token">
   </a>
   <a href="https://badge.fury.io/js/typeorm-encrypted">
     <img src="https://badge.fury.io/js/typeorm-encrypted.svg">
