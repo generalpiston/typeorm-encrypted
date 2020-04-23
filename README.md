@@ -32,7 +32,7 @@ This library can invoked in 2 ways: transformers or subscribers. In both of the 
 
 The following example has the field automatically encrypted/decrypted on save/fetch respectively.
 
-```
+```typescript
 import { Entity, Column } from "typeorm";
 import { EncryptionTransformer } from "typeorm-encrypted";
 
@@ -63,7 +63,7 @@ More information about transformers is available in the [typeorm docs](https://t
 
 The following example has the field automatically encrypted/decrypted on save/fetch respectively.
 
-```
+```typescript
 import { BaseEntity, Entity, Column, createConnection } from "typeorm";
 import { ExtendedColumnOptions, AutoEncryptSubscriber } from "typeorm-encrypted";
 
@@ -95,3 +95,55 @@ let connection = createConnection({
 ```
 
 Entities and subscribers can be configured via `ormconfig.json` and environment variables as well. See the [typeorm docs](http://typeorm.io/#/using-ormconfig) for more details.
+
+### How to use a configuration file
+
+The following example is how you can create a config stored in a separate and use it
+
+encryption-config.ts
+```typescript
+// it is recommended to not store encryption keys directly in config files, 
+// it's better to use an environment variable or to use dotenv in order to load the value
+export const MyEncryptionTransformerConfig = {
+  key: process.env.ENCRYPTION_KEY,
+  algorithm: 'aes-256-cbc',
+  ivLength: 16
+};
+```
+
+user.entity.ts
+```typescript
+import { Entity, Column } from "typeorm";
+import { EncryptionTransformer } from "typeorm-encrypted";
+import { MyEncryptionTransformerConfig } from './encryption-config.ts'; // path to where you stored your config file
+
+@Entity()
+class User {
+  // ...
+
+  @Column({
+    type: "varchar",
+    nullable: false,
+    transformer: new EncryptionTransformer(MyEncryptionTransformerConfig)
+  })
+  secret: string;
+
+  // ...
+}
+```
+
+It's possible to customize the config if you need to use a different ivLength or customize other fields, a brief example below
+
+`user.entity.ts`
+```typescript
+class User {
+  // same as before, but for the transformer line
+  @Column({
+    type: "varchar",
+    nullable: false,
+    transformer: new EncryptionTransformer({...MyEncryptionTransformerConfig, ivLength: 24})
+  })
+  secret: string;
+  // ...
+}
+```
