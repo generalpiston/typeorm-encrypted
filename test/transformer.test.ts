@@ -50,7 +50,7 @@ describe('Transformer', () => {
     });
   });
 
-  it('should automatically encrypt and decrypt aes-256-ccm with 8-byte long auth tag length', async () => {
+  it('should automatically encrypt and decrypt aes-256-gcm with 8-byte long auth tag length', async () => {
     await withConnection(async (connection: Connection) => {
       const manager = connection.manager;
       const repo = connection.getRepository(TransformerOptionsAES256GCMEntity2);
