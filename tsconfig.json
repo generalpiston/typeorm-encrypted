@@ -1,25 +1,25 @@
 {
-    "version": "2.1.1",
-    "compilerOptions": {
-        "lib": ["es5", "es6", "esnext.asynciterable"],
-        "baseUrl": "src",
-        "outDir": "lib",
-        "target": "es5",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitReturns": true,
-        "stripInternal": true,
-        "pretty": true,
-        "strictNullChecks": true,
-        "noUnusedLocals": true,
-        "declaration": true,
-        "downlevelIteration": true
-    },
-    "include": ["src"],
-    "exclude": ["tmp", "temp", "lib", "node_modules"]
+  "version": "2.1.1",
+  "compilerOptions": {
+    "lib": ["es5", "es6", "esnext.asynciterable"],
+    "baseUrl": "src",
+    "outDir": "lib",
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "stripInternal": true,
+    "pretty": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "declaration": true,
+    "downlevelIteration": true
+  },
+  "include": ["src"],
+  "exclude": ["tmp", "temp", "lib", "node_modules"]
 }

@@ -1,34 +1,59 @@
 import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 import { EncryptionOptions } from './options';
 
+const DEFAULT_AUTH_TAG_LENGTH = 16;
+
+function hasAuthTag(algorithm: string):boolean {
+  return algorithm.endsWith('-gcm') || algorithm.endsWith('-ccm') || algorithm.endsWith('-ocb')
+}
+
 /**
  * Encrypt data.
  */
 export function encryptData(data: Buffer, options: EncryptionOptions): Buffer {
-  let iv = options.iv
+  const { algorithm, authTagLength, ivLength, key } = options;
+  const iv = options.iv
     ? Buffer.from(options.iv, 'hex')
-    : randomBytes(options.ivLength);
-  let cipher = createCipheriv(
-    options.algorithm,
-    Buffer.from(options.key, 'hex'),
-    iv
+    : randomBytes(ivLength);
+  const cipherOptions = { authTagLength: authTagLength ?? DEFAULT_AUTH_TAG_LENGTH };
+  const cipher = (createCipheriv as any)(
+    algorithm,
+    Buffer.from(key, 'hex'),
+    iv,
+    cipherOptions
   );
-  let start = cipher.update(data);
-  let final = cipher.final();
-  return Buffer.concat([iv, start, final]);
+  const start = cipher.update(data);
+  const final = cipher.final();
+
+  if (hasAuthTag(options.algorithm)) {
+    return Buffer.concat([iv, cipher.getAuthTag(), start, final]);
+  } else {
+    return Buffer.concat([iv, start, final]);
+  }
 }
 
 /**
  * Decrypt data.
  */
 export function decryptData(data: Buffer, options: EncryptionOptions): Buffer {
-  let iv = data.slice(0, options.ivLength);
-  let decipher = createDecipheriv(
-    options.algorithm,
-    Buffer.from(options.key, 'hex'),
+  const { algorithm, ivLength, key } = options;
+  const authTagLength = options.authTagLength ?? DEFAULT_AUTH_TAG_LENGTH;
+  const iv = data.slice(0, ivLength);
+  const decipher = createDecipheriv(
+    algorithm,
+    Buffer.from(key, 'hex'),
     iv
   );
-  let start = decipher.update(data.slice(options.ivLength));
-  let final = decipher.final();
+
+  let dataToUse = data.slice(options.ivLength);
+
+  if (hasAuthTag(options.algorithm)) {
+    decipher.setAuthTag(dataToUse.slice(0, authTagLength));
+    dataToUse = dataToUse.slice(authTagLength);
+  }
+
+  const start = decipher.update(dataToUse);
+  const final = decipher.final();
+
   return Buffer.concat([start, final]);
 }
