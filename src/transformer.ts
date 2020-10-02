@@ -6,7 +6,7 @@ export class EncryptionTransformer implements ValueTransformer {
   constructor(private options: EncryptionOptions) {}
 
   public from(value?: string | null): string | undefined {
-    if (value === null || value === undefined) {
+    if (!value) {
       return;
     }
 
@@ -17,7 +17,7 @@ export class EncryptionTransformer implements ValueTransformer {
   }
 
   public to(value?: string | null): string | undefined {
-    if (value === null || value === undefined) {
+    if (!value) {
       return;
     }
 
