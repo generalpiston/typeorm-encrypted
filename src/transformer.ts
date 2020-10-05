@@ -17,7 +17,7 @@ export class EncryptionTransformer implements ValueTransformer {
   }
 
   public to(value?: string | null): string | undefined {
-    if (value === null || value === undefined) {
+    if ((value ?? null) === null) {
       return;
     }
 

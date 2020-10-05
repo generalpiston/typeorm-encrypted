@@ -20,8 +20,8 @@ describe('Column Options - Active Record', () => {
     expect(result.secret).to.equal('test');
   });
 
-  it('should automatically encrypt and decrypt', async () => {
-    await withConnection(async () => {
+  it('should automatically encrypt and decrypt', (done) => {
+    withConnection(async () => {
       let result = new ColumnOptionsEntity1();
       result.secret = 'test';
       await result.save();
@@ -32,6 +32,7 @@ describe('Column Options - Active Record', () => {
       let results = await ColumnOptionsEntity1.find();
       expect(results.length).to.equal(1);
       expect(results[0].secret).to.equal('test');
+      done();
     });
   });
 });
