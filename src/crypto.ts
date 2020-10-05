@@ -48,6 +48,8 @@ export function decryptData(data: Buffer, options: EncryptionOptions): Buffer {
   let dataToUse = data.slice(options.ivLength);
 
   if (hasAuthTag(options.algorithm)) {
+    // Add ts-ignore due to build error TS2339: Property 'setAuthTag' does not exist on type 'Decipher'.
+    // @ts-ignore
     decipher.setAuthTag(dataToUse.slice(0, authTagLength));
     dataToUse = dataToUse.slice(authTagLength);
   }

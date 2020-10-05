@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { encryptData, decryptData } from '../src/crypto';
 
-describe('Crypto', () => {
-  it('should encrypt', () => {
+describe('Crypto', function() {
+  it('should encrypt', function() {
     let result = encryptData(Buffer.from('test', 'utf8'), {
       key: 'e41c966f21f9e1577802463f8924e6a3fe3e9751f201304213b2f845d8841d61',
       algorithm: 'aes-256-cbc',
@@ -14,7 +14,7 @@ describe('Crypto', () => {
     );
   });
 
-  it('should decrypt', () => {
+  it('should decrypt', function() {
     let result = decryptData(
       Buffer.from('/1rBkZBCSx2I+UGe+UmuVhKzmHsDDv0EvRtMBFiaE3A=', 'base64'),
       {
