@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { Connection } from 'typeorm';
 import { withConnection } from './utils';
+import TransformerOptionsEntityEmptyString1 from './entities/TransformerOptionsEntityEmptyString1';
 import TransformerOptionsEntity1 from './entities/TransformerOptionsEntity1';
 import TransformerOptionsEntityNullable1 from './entities/TransformerOptionsEntityNullable1';
 import TransformerOptionsEntityNullable2 from './entities/TransformerOptionsEntityNullable2';
@@ -121,6 +122,31 @@ describe('Transformer', () => {
 
       expect(results.length).to.equal(1);
       expect(results[0].secret).to.equal(undefined);
+
+      done()
+    });
+  });
+
+  it('should encrypt / decrypt empty strings', (done) => {
+    withConnection(async (connection: Connection) => {
+      const manager = connection.manager;
+      const repo = connection.getRepository(TransformerOptionsEntityEmptyString1);
+      const instance = await repo.create({ secret: '' });
+      await repo.save(instance);
+
+      const result = await manager.query(
+        'SELECT secret FROM transformer_options_entity_empty_string1'
+      );
+      
+
+      expect(result[0].secret).to.equal(
+        '/1rBkZBCSx2I+UGe+UmuVvnjveB6onZ3uoKZCOZfzbk='
+      );
+
+      const results = await repo.find();
+
+      expect(results.length).to.equal(1);
+      expect(results[0].secret).to.equal('');
 
       done()
     });
