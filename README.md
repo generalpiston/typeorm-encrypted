@@ -153,3 +153,23 @@ class User {
 ### Why won't complex queries work?
 
 Queries that transform the encrypted column wont work because transformers and subscribers operate outside of the DBMS.
+
+### Error: Invalid IV length
+
+The most likely reasons you're receiving this error:
+
+1. Column definition is wrong. Probably an issue with the key or IV.
+2. There is existing data in your DBMS. In this case, please migrate the data.
+
+### How can an encrypted column be added to a table with data?
+
+Follow these steps to add an encrypted column.
+
+1. Add a new column (col B) to the table. Configure the column to be encrypted. Remove the transformer from the original column (col A).
+2. Write a script that queries all of the entries in the table. Set the value of col B to col A.
+3. Save all the records.
+4. Rename col A to something else manually.
+5. Rename col B to the original name of col A manually.
+6. Remove the typeorm configuration for col A.
+7. Rename the typeorm configuration for col B to col A's name.
+8. Remove col A (unencrypted column) from the table manually.
