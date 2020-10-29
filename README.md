@@ -147,3 +147,9 @@ class User {
   // ...
 }
 ```
+
+## FAQ
+
+### Why won't complex queries work?
+
+Queries that transform the encrypted column wont work because transformers and subscribers operate outside of the DBMS.
