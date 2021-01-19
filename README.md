@@ -173,3 +173,9 @@ Follow these steps to add an encrypted column.
 6. Remove the typeorm configuration for col A.
 7. Rename the typeorm configuration for col B to col A's name.
 8. Remove col A (unencrypted column) from the table manually.
+
+### Can typeorm-encrypted encrypt the entire database?
+
+No. This library encrypts specific fields in a database.
+
+Popular databases like [MySQL](https://dev.mysql.com/doc/refman/8.0/en/innodb-data-encryption.html) and [PostgreSQL](https://www.postgresql.org/docs/8.1/encryption-options.html) are capable of data-at-rest and in-flight encryption. Refer to your database manual to figure out how to encrypt the entirety of the database.
