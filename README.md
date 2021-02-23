@@ -160,6 +160,7 @@ The most likely reasons you're receiving this error:
 
 1. Column definition is wrong. Probably an issue with the key or IV.
 2. There is existing data in your DBMS. In this case, please migrate the data.
+3. Your query cache needs to be cleared. The typeorm query cache can be cleared globally using the [typeorm-cli](https://typeorm.io/#/using-cli): `typeorm cache:clear`. For other, more specific, solutions, see the [typeorm documentation](https://typeorm.io/#/caching).
 
 ### How can an encrypted column be added to a table with data?
 
