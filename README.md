@@ -11,9 +11,6 @@ Encrypted field for [typeorm](http://typeorm.io).
   <a href="https://badge.fury.io/js/typeorm-encrypted">
     <img src="https://badge.fury.io/js/typeorm-encrypted.svg">
   </a>
-  <a href="https://david-dm.org/abec/typeorm-encrypted">
-    <img src="https://david-dm.org/abec/typeorm-encrypted.svg">
-  </a>
   <br />
   <br />
 </div>
