@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { EncryptionTransformer } from '../../src/transformer';
 
-@Entity()
+@Entity({ name: "transformer_options_aes256gcm_entity2" })
 export default class TransformerOptionsAES256GCMEntity2 {
   @PrimaryGeneratedColumn()
   id: number;
