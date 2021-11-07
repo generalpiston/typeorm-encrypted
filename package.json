@@ -1,6 +1,6 @@
 {
   "name": "typeorm-encrypted",
-  "version": "0.5.6",
+  "version": "0.6.0",
   "description": "encrypted typeorm fields",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
