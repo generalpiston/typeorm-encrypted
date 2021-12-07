@@ -89,29 +89,8 @@ export class JSONEncryptionTransformer implements ValueTransformer {
     if (!value) {
       return;
     }
-    // Support FindOperator.
-    // Just support "Equal", "In", "Not", and "IsNull".
-    // Other operators aren't work correctly, because values are encrypted on the db.
-    if (value.type === `in`) {
-      return In((value.value as string[]).map(s =>
-        encryptData(
-          Buffer.from(s, 'utf-8'),
-          this.options
-        ).toString('base64')
-      ));
-    } else if (value.type === 'equal') {
-      return Equal(encryptData(
-        Buffer.from(value.value as string, 'utf-8'),
-        this.options
-      ).toString('base64'));
-    } else if (value.type === 'not') {
-      return Not(
-        this.to(value.child ?? value.value)
-      );
-    } else if (value.type === 'isNull') {
-      return value
-    } else {
-      throw new Error('Only "Equal","In", "Not", and "IsNull" are supported for FindOperator');
-    }
+    
+    // FindOperators are not supported.
+    throw new Error('Filter operators are not supported for JSON encrypted fields');
   }
 }
