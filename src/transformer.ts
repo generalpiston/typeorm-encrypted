@@ -59,7 +59,7 @@ export class EncryptionTransformer implements ValueTransformer {
 export class JSONEncryptionTransformer implements ValueTransformer {
   constructor(private options: EncryptionOptions) {}
 
-  public from(value?: string | null | object): string | undefined {
+  public from(value?: string | null | object): Object | undefined {
     if (!value) {
       return;
     }
@@ -72,12 +72,12 @@ export class JSONEncryptionTransformer implements ValueTransformer {
     return JSON.parse(decrypted);
   }
 
-  public to(value?: string | FindOperator<any> | null): string | FindOperator<any> | undefined {
+  public to(value?: any | FindOperator<any> | null): string | FindOperator<any> | undefined {
     if ((value ?? null) === null) {
       return;
     }
 
-    if (typeof value === 'object' && !value.type) {
+    if (typeof value === 'object' && !value?.type) {
       return encryptData(
         Buffer.from(JSON.stringify(value) as string, 'utf8'),
         this.options
