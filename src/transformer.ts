@@ -5,7 +5,7 @@ import { decryptData, encryptData } from './crypto';
 export class EncryptionTransformer implements ValueTransformer {
   constructor(private options: EncryptionOptions) {}
 
-  public from(value?: string | null | object): string | undefined {
+  public from(value?: string | null): string | undefined {
     if (!value) {
       return;
     }
