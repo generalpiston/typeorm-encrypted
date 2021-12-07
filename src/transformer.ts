@@ -60,12 +60,12 @@ export class JSONEncryptionTransformer implements ValueTransformer {
   constructor(private options: EncryptionOptions) {}
 
   public from(value?:  null | any): any | undefined {
-    if (!value) {
+    if (!value || !value.encrypted) {
       return;
     }
 
     const decrypted = decryptData(
-      Buffer.from(value.encrypted ?? '' as string, 'base64'),
+      Buffer.from(value.encrypted as string, 'base64'),
       this.options
     ).toString('utf8');
 
