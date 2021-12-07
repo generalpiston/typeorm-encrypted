@@ -59,29 +59,31 @@ export class EncryptionTransformer implements ValueTransformer {
 export class JSONEncryptionTransformer implements ValueTransformer {
   constructor(private options: EncryptionOptions) {}
 
-  public from(value?: string | null | object): Object | undefined {
+  public from(value?:  null | any): any | undefined {
     if (!value) {
       return;
     }
 
     const decrypted = decryptData(
-      Buffer.from(value as string, 'base64'),
+      Buffer.from(value.encrypted ?? '' as string, 'base64'),
       this.options
     ).toString('utf8');
 
     return JSON.parse(decrypted);
   }
 
-  public to(value?: any | FindOperator<any> | null): string | FindOperator<any> | undefined {
+  public to(value?: any | FindOperator<any> | null): Object | FindOperator<any> | undefined {
     if ((value ?? null) === null) {
       return;
     }
 
     if (typeof value === 'object' && !value?.type) {
-      return encryptData(
+      const encrypted = encryptData(
         Buffer.from(JSON.stringify(value) as string, 'utf8'),
         this.options
       ).toString('base64');
+
+      return { encrypted }
     }
 
     if (!value) {
