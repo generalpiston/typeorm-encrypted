@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/abec/typeorm-encrypted.git"
+    "url": "https://github.com/generalpiston/typeorm-encrypted.git"
   },
   "keywords": [
     "typescript",
@@ -43,7 +43,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/abec/typeorm-encrypted/issues"
+    "url": "https://github.com/generalpiston/typeorm-encrypted/issues"
   },
-  "homepage": "https://github.com/abec/typeorm-encrypted#readme"
+  "homepage": "https://github.com/generalpiston/typeorm-encrypted#readme"
 }
