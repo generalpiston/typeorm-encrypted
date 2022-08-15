@@ -42,9 +42,8 @@ class User {
     nullable: false,
     transformer: new EncryptionTransformer({
       key: 'e41c966f21f9e1577802463f8924e6a3fe3e9751f201304213b2f845d8841d61',
-      algorithm: 'aes-256-cbc',
-      ivLength: 16,
-      iv: 'ff5ac19190424b1d88f9419ef949ae56'
+      algorithm: 'aes-256-gcm',
+      ivLength: 16
     })
   })
   secret: string;
@@ -70,9 +69,8 @@ class User {
     nullable: false,
     transformer: new JSONEncryptionTransformer({
       key: 'e41c966f21f9e1577802463f8924e6a3fe3e9751f201304213b2f845d8841d61',
-      algorithm: 'aes-256-cbc',
-      ivLength: 16,
-      iv: 'ff5ac19190424b1d88f9419ef949ae56'
+      algorithm: 'aes-256-gcm',
+      ivLength: 16
     })
   })
   secret: object;
@@ -101,7 +99,7 @@ class User extends BaseEntity {
     nullable: false,
     encrypt: {
       key: "d85117047fd06d3afa79b6e44ee3a52eb426fc24c3a2e3667732e8da0342b4da",
-      algorithm: "aes-256-cbc",
+      algorithm: "aes-256-gcm",
       ivLength: 16
     }
   })
@@ -131,7 +129,7 @@ encryption-config.ts
 // it's better to use an environment variable or to use dotenv in order to load the value
 export const MyEncryptionTransformerConfig = {
   key: process.env.ENCRYPTION_KEY,
-  algorithm: 'aes-256-cbc',
+  algorithm: 'aes-256-gcm',
   ivLength: 16
 };
 ```
@@ -178,6 +176,23 @@ class User {
 ### Why won't complex queries work?
 
 Queries that transform the encrypted column wont work because transformers and subscribers operate outside of the DBMS.
+
+### What alogorithm should I use?
+
+Unless you need to maintain compatibility with an older system (or you know exactly what you're doing),
+you should use "aes-256-gcm" for the mode.
+This means that the encryption keys are are 256 bits (32-bytes) long and that the mode of operation
+is GCM ([Galois Counter Mode](https://en.wikipedia.org/wiki/Galois/Counter_Mode)).
+
+GCM provides both secrecy and authenticity and can generally use CPU acceleration where available.
+
+### Should I hardcode the IV?
+
+No. Don't ever do this.
+It will break the encryption and is vulnerable to a "repeated nonce" attack.
+
+If you don't provide an IV, the library will randomly generate a secure one for you.
+
 
 ### Error: Invalid IV length
 
