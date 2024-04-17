@@ -14,6 +14,9 @@ export function encrypt<T extends ObjectLiteral>(entity: any): any {
     let { propertyName, mode, target } = columnMetadata;
     let options: ExtendedColumnOptions = columnMetadata.options;
     let encrypt = options.encrypt;
+    if (encrypt?.encryptionPredicate && !encrypt?.encryptionPredicate(entity)) {
+      continue;
+    }
     if (
       encrypt &&
       mode === 'regular' &&
@@ -42,6 +45,9 @@ export function decrypt<T extends ObjectLiteral>(entity: any): any {
     let { propertyName, mode, target } = columnMetadata;
     let options: ExtendedColumnOptions = columnMetadata.options;
     let encrypt = options.encrypt;
+    if (encrypt?.encryptionPredicate && !encrypt?.encryptionPredicate(entity)) {
+      continue;
+    }
     if (
       encrypt &&
       mode === 'regular' &&

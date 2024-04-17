@@ -5,4 +5,5 @@ export interface EncryptionOptions {
   iv?: string;    //// For testing mainly.
   authTagLength?: number;
   looseMatching?: boolean;
+  encryptionPredicate?: (entity: any) => boolean;
 }
