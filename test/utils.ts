@@ -1,11 +1,11 @@
-import { createConnection, Connection } from "typeorm";
+import { DataSource } from "typeorm";
 
 import { AutoEncryptSubscriber } from "../src/subscribers";
 
-let CONNECTION: Connection;
+let CONNECTION: DataSource;
 let LOCK = false;
 
-export async function getConnection(): Promise<Connection> {
+export async function getConnection(): Promise<DataSource> {
   try {
     while (LOCK) {
       await new Promise((resolve) => setTimeout(resolve, 100));
@@ -14,8 +14,8 @@ export async function getConnection(): Promise<Connection> {
     LOCK = true;
 
     if (!CONNECTION) {
-      CONNECTION = await createConnection({
-        "type": "sqlite",
+      CONNECTION = await new DataSource({
+        "type": "better-sqlite3",
         "database": `/tmp/test.${process.pid}.sqlite`,
         "synchronize": true,
         "logging": false,
@@ -23,7 +23,7 @@ export async function getConnection(): Promise<Connection> {
           "**/entities/**/*.ts"
         ],
         "subscribers": [ AutoEncryptSubscriber ]
-      });
+      }).initialize();
     }
 
     return CONNECTION;

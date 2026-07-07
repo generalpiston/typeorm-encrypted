@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { Connection } from "typeorm";
+import { DataSource } from "typeorm";
 import { getConnection } from "./utils";
 import TransformerOptionsEntityEmptyString1 from "./entities/TransformerOptionsEntityEmptyString1";
 import TransformerOptionsEntity1 from "./entities/TransformerOptionsEntity1";
@@ -9,7 +9,7 @@ import TransformerOptionsAES256GCMEntity1 from "./entities/TransformerOptionsAES
 import TransformerOptionsAES256GCMEntity2 from "./entities/TransformerOptionsAES256GCMEntity2";
 
 describe("Transformer", function () {
-  let connection: Connection;
+  let connection: DataSource;
 
   this.timeout(10000);
 
