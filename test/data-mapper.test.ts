@@ -1,10 +1,10 @@
 import { expect } from "chai";
-import { Connection } from "typeorm";
+import { DataSource } from "typeorm";
 import { getConnection } from "./utils";
 import ColumnOptionsEntity2 from "./entities/ColumnOptionsEntity2";
 
 describe("Column Options - Data Mapper", function () {
-  let connection: Connection;
+  let connection: DataSource;
 
   this.timeout(10000);
 

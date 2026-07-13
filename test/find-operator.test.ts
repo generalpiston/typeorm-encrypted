@@ -1,10 +1,11 @@
 import { expect } from "chai";
-import { Connection, In, Not, IsNull, Equal, Like, LessThan } from "typeorm";
+import { DataSource, In, Not, IsNull, Equal, LessThan, Like } from "typeorm";
 import { getConnection } from "./utils";
 import TransformerOptionsEntity3 from "./entities/TransformerOptionsEntity3";
+import { EncryptionTransformer } from "../src/transformer";
 
 describe("Find operator", function () {
-  let connection: Connection;
+  let connection: DataSource;
 
   this.timeout(10000);
 
@@ -62,34 +63,34 @@ describe("Find operator", function () {
       await repo.clear();
     }
   });
-  it("should throw error by not supported FindOperator", async function () {
+  it("should not match wildcard Like patterns on encrypted values", async function () {
     const repo = connection.getRepository(TransformerOptionsEntity3);
 
     try {
       const secret1 = "test3";
-      const secret2 = "test4";
-      await repo.save([{ secret: secret1 }, { secret: secret2 }]);
-      // Can't use FindOperator except supported ones
-      for (const notSupportedOperator of [LessThan(secret1), Like(secret1)]) {
-        await repo
-          .find({
-            where: {
-              secret: notSupportedOperator,
-            },
-          })
-          .then(
-            () => {
-              throw new Error("Never resolved");
-            },
-            (reason) => {
-              expect(reason.message).to.equal(
-                'Only "Equal","In", "Not", and "IsNull" are supported for FindOperator'
-              );
-            }
-          );
-      }
+      await repo.save({ secret: secret1 });
+
+      const whereLike = await repo.find({
+        where: {
+          secret: Like(`%${secret1}%`),
+        },
+      });
+
+      expect(whereLike.length).to.equal(0);
     } finally {
       await repo.clear();
     }
+  });
+
+  it("should reject unsupported FindOperator instances when transformed directly", function () {
+    const transformer = new EncryptionTransformer({
+      key: 'e41c966f21f9e1577802463f8924e6a3fe3e9751f201304213b2f845d8841d61',
+      algorithm: 'aes-256-cbc',
+      ivLength: 16,
+      iv: 'ff5ac19190424b1d88f9419ef949ae56'
+    });
+
+    expect(() => transformer.to(Like("%test3%"))).to.throw('Only "Equal","In", "Not", and "IsNull" are supported for FindOperator');
+    expect(() => transformer.to(LessThan("test3"))).to.throw('Only "Equal","In", "Not", and "IsNull" are supported for FindOperator');
   });
 });
