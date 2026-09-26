@@ -10,7 +10,7 @@
   "devDependencies": {
     "@types/chai": "^4.2.13",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^20.19.43",
+    "@types/node": "^26.6.2",
     "better-sqlite3": "^12.11.1",
     "chai": "^6.2.2",
     "mocha": "^11.7.6",
